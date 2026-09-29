@@ -5,6 +5,7 @@ import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { areaThreats, activeWarning, nowcastAt, stormAt, strikesAt } from '@/services/simulation';
 import { observedTrack, riskAreaOutline, stormGeoOutline, toGeo } from '@/services/simulationGeo';
+import { environmentField, envOverlayNames, fieldValue, type EnvOverlay } from '@/services/environment';
 import type { StormState } from '@/data/simulation';
 
 export type SimLayer = 'radar' | 'satellite' | 'lightning' | 'wrf' | 'ai';
@@ -19,13 +20,14 @@ const bands = [
 const leads = [30, 60, 90, 120];
 
 export type MapFocus = { lat: number; lng: number; label: string };
-type Props = { time: number; layers: Record<SimLayer, boolean>; state: StormState; focus?: MapFocus | null; className?: string };
+type Props = { time: number; layers: Record<SimLayer, boolean>; state: StormState; focus?: MapFocus | null; className?: string; envOverlay?: EnvOverlay | null };
 
-export function SimulationLeafletMap({ time, layers, state, focus, className = '' }: Props) {
+export function SimulationLeafletMap({ time, layers, state, focus, className = '', envOverlay = null }: Props) {
   const node = useRef<HTMLDivElement>(null);
   const map = useRef<Leaflet.Map | null>(null);
   const leaflet = useRef<typeof Leaflet | null>(null);
   const overlays = useRef<Leaflet.LayerGroup | null>(null);
+  const envGroup = useRef<Leaflet.LayerGroup | null>(null);
   const satelliteTiles = useRef<Leaflet.TileLayer | null>(null);
   const [ready, setReady] = useState(false);
   const [selected, setSelected] = useState(false);
@@ -44,11 +46,13 @@ export function SimulationLeafletMap({ time, layers, state, focus, className = '
       satelliteTiles.current = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         maxZoom: 19, attribution: 'Imagery &copy; Esri and partners', opacity: .75,
       });
+      instance.createPane('envPane'); const envPane = instance.getPane('envPane'); if (envPane) { envPane.style.zIndex = '350'; }
+      envGroup.current = L.layerGroup().addTo(instance);
       overlays.current = L.layerGroup().addTo(instance);
       setReady(true);
       requestAnimationFrame(() => instance?.invalidateSize());
     }).catch(error => console.error('Map could not load', error));
-    return () => { disposed = true; setReady(false); instance?.remove(); map.current = null; leaflet.current = null; overlays.current = null; satelliteTiles.current = null; };
+    return () => { disposed = true; setReady(false); instance?.remove(); map.current = null; leaflet.current = null; overlays.current = null; envGroup.current = null; satelliteTiles.current = null; };
   }, []);
 
   useEffect(() => {
@@ -67,6 +71,28 @@ export function SimulationLeafletMap({ time, layers, state, focus, className = '
       .setContent(focus.label)
       .openOn(instance);
   }, [focus, ready]);
+
+  // Environmental (ERA5-style) overlay: separate pane below storm layers; one at a time.
+  useEffect(() => {
+    const L = leaflet.current, group = envGroup.current;
+    if (!ready || !L || !group) return;
+    group.clearLayers();
+    if (!envOverlay) return;
+    const css = (v: string) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+    const ramp = envOverlay === 'cape' ? [css('--green'), css('--yellow'), css('--orange'), css('--red')] : envOverlay === 'moisture' ? [css('--muted-foreground'), css('--cyan'), css('--primary'), css('--purple')] : [css('--muted-foreground'), css('--cyan'), css('--yellow'), css('--orange')];
+    const step = .12;
+    for (let lat = 27.4; lat < 29.8; lat += step) for (let lng = 75.8; lng < 78.7; lng += step) {
+      const v = environmentField(envOverlay, lat + step / 2, lng + step / 2);
+      if (v < .12) continue;
+      const fill = ramp[Math.min(3, Math.floor(v * 4))];
+      group.addLayer(L.rectangle([[lat, lng], [lat + step, lng + step]], { pane: 'envPane', stroke: false, fillColor: fill, fillOpacity: .12 + v * .28, interactive: false }));
+      if (envOverlay === 'shear' && Math.round((lat - 27.4) / step) % 3 === 0 && Math.round((lng - 75.8) / step) % 3 === 0) {
+        const rot = 35 + v * 30;
+        group.addLayer(L.marker([lat + step / 2, lng + step / 2], { pane: 'envPane', interactive: false, icon: L.divIcon({ className: 'env-wind-pin', html: `<span style="transform:rotate(${rot}deg);opacity:${.35 + v * .6}">➤</span>`, iconSize: [16, 16], iconAnchor: [8, 8] }) }));
+      }
+    }
+    group.addLayer(L.marker([29.55, 75.95], { pane: 'envPane', interactive: false, icon: L.divIcon({ className: 'env-map-label', html: `${envOverlayNames[envOverlay]} · peak ${fieldValue(envOverlay, 1)} · SIMULATED ERA5`, iconSize: [260, 20], iconAnchor: [0, 0] }) }));
+  }, [ready, envOverlay]);
 
   // The simulation service owns the scenario; this component only projects it.
   const frame = Math.floor(time * 4) / 4;

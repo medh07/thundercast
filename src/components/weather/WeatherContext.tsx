@@ -1,8 +1,9 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { defaultSettings, initialAlerts } from '@/data/weather';
+import type { EnvOverlay } from '@/services/environment';
 import type { LayerKey, WeatherAlert, WeatherSettings } from '@/types/weather';
 
-type WeatherContextValue = { settings: WeatherSettings; setSetting: <K extends keyof WeatherSettings>(key: K, value: WeatherSettings[K]) => void; toggleLayer: (layer: LayerKey) => void; resetSettings: () => void; alerts: WeatherAlert[]; updateAlert: (id: string, status: WeatherAlert['status']) => void; time: number; setTime: (time: number) => void; playing: boolean; setPlaying: (playing: boolean) => void };
+type WeatherContextValue = { settings: WeatherSettings; setSetting: <K extends keyof WeatherSettings>(key: K, value: WeatherSettings[K]) => void; toggleLayer: (layer: LayerKey) => void; resetSettings: () => void; alerts: WeatherAlert[]; updateAlert: (id: string, status: WeatherAlert['status']) => void; time: number; setTime: (time: number) => void; playing: boolean; setPlaying: (playing: boolean) => void; envOverlay: EnvOverlay | null; setEnvOverlay: (o: EnvOverlay | null) => void };
 const Context = createContext<WeatherContextValue | null>(null);
 const SETTINGS_KEY = 'thundercast-settings';
 const ALERTS_KEY = 'thundercast-alerts';
@@ -11,6 +12,7 @@ export function WeatherProvider({ children }: { children: ReactNode }) {
   const [alerts, setAlerts] = useState<WeatherAlert[]>(initialAlerts);
   const [time, setTime] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [envOverlay, setEnvOverlay] = useState<EnvOverlay | null>(null);
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     try {
@@ -31,6 +33,6 @@ export function WeatherProvider({ children }: { children: ReactNode }) {
   const setSetting = <K extends keyof WeatherSettings>(key: K, value: WeatherSettings[K]) => setSettings(current => ({ ...current, [key]: value }));
   const toggleLayer = (layer: LayerKey) => setSettings(current => ({ ...current, layers: { ...current.layers, [layer]: !current.layers[layer] } }));
   const updateAlert = (id: string, status: WeatherAlert['status']) => setAlerts(current => current.map(alert => alert.id === id ? { ...alert, status } : alert));
-  return <Context.Provider value={{ settings, setSetting, toggleLayer, resetSettings: () => setSettings(defaultSettings), alerts, updateAlert, time, setTime, playing, setPlaying }}>{children}</Context.Provider>;
+  return <Context.Provider value={{ settings, setSetting, toggleLayer, resetSettings: () => setSettings(defaultSettings), alerts, updateAlert, time, setTime, playing, setPlaying, envOverlay, setEnvOverlay }}>{children}</Context.Provider>;
 }
 export function useWeather() { const value = useContext(Context); if (!value) throw new Error('WeatherProvider missing'); return value; }
