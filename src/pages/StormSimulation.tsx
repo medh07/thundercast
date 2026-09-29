@@ -31,10 +31,8 @@ export function StormSimulation() {
   const s = stormAt(time);
   const why = explain(time);
   const warning = activeWarning(time);
-  const predictions = leads.map(l => nowcastAt(time, l)).filter(p => p.valid && p.dbz > 18);
   const toggle = (k: SimLayer) => setLayers(l => ({ ...l, [k]: !l[k] }));
   const restart = () => { setTime(0); setPlaying(true); };
-  const alive = time < SIM_TOTAL_MIN - 1;
 
   return <div className="page sim-page">
     <div className="page-heading"><div><span className="eyebrow">SCENARIO REPLAY / STORM CELL T-01</span><h1>Storm Simulation</h1><p>A 6-hour thunderstorm lifecycle replayed in 5 minutes · deterministic synthetic event</p></div><span className="sim-badge">SIMULATED DATA</span></div>
