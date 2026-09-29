@@ -6,3 +6,4 @@
 - [x] AI Engine and Validation pages; replace unsupported accuracy claims.
 - [x] Replace only the Storm Simulation schematic map with an interactive Leaflet map and synthetic geospatial overlays; verify playback and layer controls.
 - [x] Reuse the interactive Leaflet map on Overview and Live Map; verify shared layers, search, playback, and responsive layouts.
+- [x] Add ERA5 3D Atmospheric Environment panel, prediction drivers, and one-at-a-time environment map overlays on Overview.

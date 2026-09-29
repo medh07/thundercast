@@ -19,7 +19,7 @@ const places: Record<string, MapFocus> = {
   faridabad: { lat: 28.4089, lng: 77.3178, label: 'Faridabad' },
 };
 export function WeatherMap({ full = false }: { full?: boolean }) {
-  const { settings, toggleLayer, time, setTime, playing, setPlaying } = useWeather();
+  const { settings, toggleLayer, time, setTime, playing, setPlaying, envOverlay } = useWeather();
   const [layersOpen, setLayersOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -47,7 +47,7 @@ export function WeatherMap({ full = false }: { full?: boolean }) {
   return <div className={`weather-map ${full ? 'weather-map-full' : ''}`}>
     <div className="map-heading"><strong>{full ? 'Live Radar + Satellite + Lightning Map' : 'Live Radar + Satellite + Lightning Overlay'}</strong><span className="live-indicator"><i /> SIMULATED</span></div>
     <div className="map-viewport">
-      <SimulationLeafletMap time={simTime} layers={layers} state={state} focus={focus} className="weather-leaflet" />
+      <SimulationLeafletMap time={simTime} layers={layers} state={state} focus={focus} envOverlay={envOverlay} className="weather-leaflet" />
       <div className="map-tools leaflet-map-tools"><Button variant="mapTool" size="icon" title="Toggle map layers" onClick={() => setLayersOpen(!layersOpen)}><Layers3 /></Button>{full && <Button variant="mapTool" size="icon" title="Search location" onClick={() => setSearchOpen(!searchOpen)}><Search /></Button>}</div>
       {settings.layers.predictedTrack && <div className="track-label"><span>✣</span><div>Predicted Storm Track<small>Next 2 hours</small></div></div>}
       {layersOpen && <div className="map-popover layer-popover"><div className="popover-heading"><strong>Map layers</strong><Button variant="ghost" size="icon" title="Close layers" onClick={() => setLayersOpen(false)}><X /></Button></div>{(Object.keys(simulationLayerNames) as SimLayer[]).map(key => <label key={key} className="layer-item"><input type="checkbox" checked={layers[key]} onChange={() => toggleSimLayer(key)} />{simulationLayerNames[key]}</label>)}</div>}
