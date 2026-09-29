@@ -45,23 +45,6 @@ export function StormSimulation() {
           <div className="sim-map-head"><strong><Activity size={15} /> T-01 · {s.stage}</strong><span className={`sim-sev sim-sev-${s.severity.toLowerCase()}`}>{s.severity}</span><span className="sim-clock">{clockFor(time)} IST <small>T+{Math.floor(time)} min</small></span></div>
           <div className="sim-layers">{(Object.keys(simulationLayerNames) as SimLayer[]).map(k => <Button key={k} variant={layers[k] ? 'filterActive' : 'filter'} size="sm" onClick={() => toggle(k)}>{simulationLayerNames[k]}</Button>)}</div>
           <SimulationLeafletMap time={time} layers={layers} state={s} />
-
-            {layers.wrf && <g className="wrf-layer"><ellipse cx={s.x + 90} cy={s.y - 60} rx={80 + s.cape / 18} ry={50 + s.cape / 30} fill="url(#wrfGrad)" style={{ opacity: Math.min(0.85, s.cape / 3000) }} /><text x={s.x + 110} y={s.y - 60 - s.cape / 30 - 12} className="sim-tag">WRF CAPE {Math.round(s.cape)} J/kg</text></g>}
-            {layers.satellite && <g filter="url(#softer)" style={{ opacity: Math.min(0.8, -s.ctt / 80) }}><path d={stormPath({ ...s, r: s.r * 1.25 }, 1.15, 4)} className="sat-cloud" /><path d={stormPath({ ...s, r: s.r * 1.25 }, 0.6, 5)} className={s.ctt < -55 ? 'sat-cold' : 'sat-mid'} /></g>}
-
-            {layers.ai && predictions.length > 0 && <g className="ai-layer">
-              <path d={`M${s.x},${s.y} ${predictions.map(p => `L${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ')}`} className="ai-track" />
-              {predictions.map(p => <g key={p.lead}><circle cx={p.x} cy={p.y} r={p.r * 0.95 + p.uncertainty} className="ai-cone" /><path d={stormPath(p, 0.9, p.lead)} className={`ai-ghost ai-ghost-${p.lead}`} /><text x={p.x} y={p.y - p.r * 0.9 - p.uncertainty - 6} className="ai-label">+{p.lead} min · {Math.round(p.dbz)} dBZ</text></g>)}
-            </g>}
-
-            {layers.radar && <g filter="url(#soft)">{bands.map((b, i) => { const op = Math.max(0, Math.min(1, (s.dbz - b.min) / 5)); return op > 0 ? <path key={b.cls} d={stormPath(s, b.scale, i * 1.7)} className={b.cls} style={{ opacity: op * 0.9 }} /> : null; })}</g>}
-
-            {areaThreats.map(a => { const warned = warning?.id === a.id; const hit = a.impactT !== null && time >= a.impactT && (a.passedT === null || time < a.passedT); return <g key={a.id} className={`sim-area ${warned ? 'warned' : ''} ${hit ? 'hit' : ''}`}><circle cx={a.x} cy={a.y} r={warned ? 16 : 6} className="area-ring" /><circle cx={a.x} cy={a.y} r="4" className="area-dot" /><text x={a.x + 10} y={a.y + 18} className="sim-place strong">{a.name}</text></g>; })}
-            {mapPlaces.map(p => <g key={p.name}><circle cx={p.x} cy={p.y} r="3" className="area-dot muted" /><text x={p.x + 7} y={p.y + 4} className="sim-place">{p.name}</text></g>)}
-
-            {layers.lightning && strikes.map(st => <g key={st.id} style={{ opacity: Math.max(0, 1 - st.age / 6) }}><path d={`M${st.x} ${st.y - 9} l-4 8 h5 l-4 9 l10 -12 h-5 l4 -5 z`} className={st.age < 0.6 ? 'strike-flash' : 'strike'} /></g>)}
-            {alive && s.dbz > 20 && <g><path d={`M${s.x},${s.y} l${Math.cos((s.heading - 90) * Math.PI / 180) * 60},${Math.sin((s.heading - 90) * Math.PI / 180) * 60}`} className="motion-vector" /><text x={s.x - 18} y={s.y + 4} className="cell-id">T-01</text></g>}
-          </svg>
           <div className="sim-legend"><span>dBZ</span><i className="dbz-20" />20<i className="dbz-35" />35<i className="dbz-45" />45<i className="dbz-55" />55<i className="dbz-60" />60+<span className="push-right"><i className="legend-ghost" /> AI nowcast +30…+120 min</span></div>
         </div>
 
