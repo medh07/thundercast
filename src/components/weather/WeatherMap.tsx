@@ -30,7 +30,7 @@ export function WeatherMap({ full = false }: { full?: boolean }) {
     setSearchOpen(false);
   };
   return <div className={`weather-map ${full ? 'weather-map-full' : ''}`}>
-    <div className="map-heading"><strong>{full ? 'Live Radar + Satellite + Lightning Map' : 'Live Radar + Satellite + Lightning Overlay'}</strong><span className="live-indicator"><i /> LIVE</span></div>
+    <div className="map-heading"><strong>{full ? 'Live Radar + Satellite + Lightning Map' : 'Live Radar + Satellite + Lightning Overlay'}</strong><span className="live-indicator"><i /> SIMULATED</span></div>
     <div className="map-viewport">
       <TransformWrapper minScale={1} maxScale={4} initialScale={1} centerOnInit wheel={{ step: 0.12 }} doubleClick={{ mode: 'zoomIn' }}>
         {({ zoomIn, zoomOut, resetTransform }) => <>
