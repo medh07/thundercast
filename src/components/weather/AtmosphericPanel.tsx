@@ -16,7 +16,7 @@ export function AtmosphericPanel() {
   const assessment = assessEnvironment(env);
   const simT = Math.min(360, 168 + time);
   const now = stormAt(simT), prev = stormAt(Math.max(0, simT - 15));
-  const { drivers, conclusion } = predictionDrivers(env, { dbz: now.dbz, dbzTrend: now.dbz - prev.dbz }, { rate: Math.round(now.lightning * 60), trend: now.lightning - prev.lightning });
+  const { drivers, conclusion } = predictionDrivers(env, { dbz: now.dbz, dbzTrend: now.dbz - prev.dbz }, { rate: Math.round(now.lightning), trend: now.lightning - prev.lightning });
   const spread = spreadLevel(env.t2m, env.d2m);
   const params = [
     { name: 'CAPE', value: `${fmt(env.cape)} J/kg`, label: capeLabel(env.cape), level: capeLevel(env.cape) },

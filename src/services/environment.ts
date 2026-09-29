@@ -44,7 +44,7 @@ export function predictionDrivers(e: Environment, radar: { dbz: number; dbzTrend
     { name: 'Moisture', up: score(moistureLevel(e.tcwv)) >= 2, note: moistureLabel(e.tcwv).replace(' Moisture', '') },
     { name: 'Wind shear', up: score(shearLevel(e.shear)) >= 2, note: shearLabel(e.shear) },
     { name: 'Radar reflectivity', up: radar.dbzTrend >= 0, note: `${Math.round(radar.dbz)} dBZ` },
-    { name: 'Lightning activity', up: lightning.trend >= 0, note: `${lightning.rate} strikes/hr` },
+    { name: 'Lightning activity', up: lightning.trend >= 0, note: `${lightning.rate} strikes/min` },
   ];
   const envTone = assessEnvironment(e).tone;
   const obsUp = (radar.dbzTrend >= 0 ? 1 : 0) + (lightning.trend >= 0 ? 1 : 0);
