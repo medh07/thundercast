@@ -1,9 +1,9 @@
 import { Link, useRouterState } from '@tanstack/react-router';
-import { Bell, Cloud, CloudRain, Database, Home, LayoutDashboard, Menu, Radar, Settings, X, Zap } from 'lucide-react';
+import { Bell, Brain, ClipboardCheck, CloudLightning, Cloud, CloudRain, Database, Home, LayoutDashboard, Menu, Radar, Settings, X, Zap } from 'lucide-react';
 import { useState, type ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { useWeather } from './WeatherContext';
-const nav = [{ to: '/', label: 'Overview', icon: Home }, { to: '/live-map', label: 'Live Map', icon: Radar }, { to: '/forecast', label: 'Forecast', icon: CloudRain }, { to: '/alerts', label: 'Alerts', icon: Bell }, { to: '/data-sources', label: 'Data Sources', icon: Database }, { to: '/settings', label: 'Settings', icon: Settings }] as const;
+const nav = [{ to: '/', label: 'Overview', icon: Home }, { to: '/live-map', label: 'Live Map', icon: Radar }, { to: '/storm-simulation', label: 'Storm Simulation', icon: CloudLightning }, { to: '/forecast', label: 'Forecast', icon: CloudRain }, { to: '/alerts', label: 'Alerts', icon: Bell }, { to: '/data-sources', label: 'Data Sources', icon: Database }, { to: '/ai-engine', label: 'AI Engine', icon: Brain }, { to: '/validation', label: 'Validation', icon: ClipboardCheck }, { to: '/settings', label: 'Settings', icon: Settings }] as const;
 export function Shell({ children }: { children: ReactNode }) {
   const path = useRouterState({ select: s => s.location.pathname });
   const { alerts, settings } = useWeather();

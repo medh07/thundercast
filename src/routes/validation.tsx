@@ -1,0 +1,3 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { Validation } from '@/pages/Validation';
+export const Route = createFileRoute('/validation')({ head: () => ({ meta: [{ title: 'Validation | ThunderCast AI' }, { name: 'description', content: 'POD, FAR and CSI verification framework for ThunderCast nowcasts — historical validation pending.' }, { property: 'og:title', content: 'Validation | ThunderCast AI' }, { property: 'og:description', content: 'Verification framework; historical validation pending.' }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' }] }), component: Validation });

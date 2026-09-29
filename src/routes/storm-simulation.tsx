@@ -1,0 +1,3 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { StormSimulation } from '@/pages/StormSimulation';
+export const Route = createFileRoute('/storm-simulation')({ head: () => ({ meta: [{ title: 'Storm Simulation | ThunderCast AI' }, { name: 'description', content: 'Replay a simulated 6-hour thunderstorm lifecycle with AI nowcasts and early warnings.' }, { property: 'og:title', content: 'Storm Simulation | ThunderCast AI' }, { property: 'og:description', content: 'Storm Cell T-01: formation to dissipation with 120-minute AI nowcasts.' }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' }] }), component: StormSimulation });

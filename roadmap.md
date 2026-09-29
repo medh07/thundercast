@@ -2,3 +2,5 @@
 - [x] Build interactive map, nowcast, storm detail, and all six working pages.
 - [x] Wire mock weather services, alert actions, and locally saved settings.
 - [x] Verify desktop/mobile rendering and interactions.
+- [x] Storm Simulation (T-01 lifecycle, AI nowcast ghosts, early warnings, controls, layers, explanation).
+- [x] AI Engine and Validation pages; replace unsupported accuracy claims.

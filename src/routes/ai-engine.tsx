@@ -1,0 +1,3 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { AIEngine } from '@/pages/AIEngine';
+export const Route = createFileRoute('/ai-engine')({ head: () => ({ meta: [{ title: 'AI Engine | ThunderCast AI' }, { name: 'description', content: 'How radar, satellite, lightning and WRF data flow into ThunderCast nowcasts and warnings.' }, { property: 'og:title', content: 'AI Engine | ThunderCast AI' }, { property: 'og:description', content: 'Data fusion, storm tracking, 0–120 min nowcast and early warning pipeline.' }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' }] }), component: AIEngine });
