@@ -72,3 +72,10 @@
 .compact-display .overview-page,.compact-display .page { padding: 10px; }.compact-display .overview-top,.compact-display .source-grid,.compact-display .insights-grid { gap: 7px; }.compact-display .panel:not(.weather-map) { padding-top: 8px; padding-bottom: 8px; }
 
 .nowcast-grid:has(.nowcast-tile:nth-child(3):last-child) { grid-template-columns: repeat(3,minmax(0,1fr)); }
+
+.map-image { transition: transform .55s ease, opacity .25s ease; }
+.forecast-step-15 .map-image { transform: translate(1%,-.5%) scale(1.03); }
+.forecast-step-30 .map-image { transform: translate(2%,-1%) scale(1.05); }
+.forecast-step-45 .map-image { transform: translate(3%,-1.5%) scale(1.07); }
+.forecast-step-60 .map-image { transform: translate(4%,-2%) scale(1.08); }
+.forecast-step-120 .map-image { transform: translate(7%,-3%) scale(1.1); }
