@@ -11,4 +11,4 @@
 
 - Weather UI is organized into pages, reusable weather components, typed mock data, and replaceable service adapters so live feeds can be added without rebuilding the interface.
 - Forecast, map layers, playback, alert status, and browser-saved preferences share one client-side weather provider so controls stay synchronized across routes.
-- Storm Simulation keeps its synthetic storm physics and forecast in the simulation service; its Leaflet adapter only projects and renders those results so later live feeds can replace the data without changing map interactions.
+- Overview, Live Map, and Storm Simulation share one Leaflet adapter; synthetic storm physics and forecasts remain in the simulation service so live feeds can replace them without changing map interactions.

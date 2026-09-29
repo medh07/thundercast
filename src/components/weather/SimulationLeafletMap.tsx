@@ -18,9 +18,10 @@ const bands = [
 ];
 const leads = [30, 60, 90, 120];
 
-type Props = { time: number; layers: Record<SimLayer, boolean>; state: StormState };
+export type MapFocus = { lat: number; lng: number; label: string };
+type Props = { time: number; layers: Record<SimLayer, boolean>; state: StormState; focus?: MapFocus | null; className?: string };
 
-export function SimulationLeafletMap({ time, layers, state }: Props) {
+export function SimulationLeafletMap({ time, layers, state, focus, className = '' }: Props) {
   const node = useRef<HTMLDivElement>(null);
   const map = useRef<Leaflet.Map | null>(null);
   const leaflet = useRef<typeof Leaflet | null>(null);
@@ -56,6 +57,16 @@ export function SimulationLeafletMap({ time, layers, state }: Props) {
     if (layers.satellite && !instance.hasLayer(satellite)) satellite.addTo(instance);
     if (!layers.satellite && instance.hasLayer(satellite)) instance.removeLayer(satellite);
   }, [ready, layers.satellite]);
+
+  useEffect(() => {
+    const L = leaflet.current, instance = map.current;
+    if (!ready || !L || !instance || !focus) return;
+    instance.flyTo([focus.lat, focus.lng], Math.max(instance.getZoom(), 10), { duration: .65 });
+    L.popup({ closeButton: false, offset: [0, -8] })
+      .setLatLng([focus.lat, focus.lng])
+      .setContent(focus.label)
+      .openOn(instance);
+  }, [focus, ready]);
 
   // The simulation service owns the scenario; this component only projects it.
   const frame = Math.floor(time * 4) / 4;
@@ -132,7 +143,7 @@ export function SimulationLeafletMap({ time, layers, state }: Props) {
     }
   }, [ready, frame, layers]);
 
-  return <div className="sim-leaflet-wrap">
+  return <div className={`sim-leaflet-wrap ${className}`.trim()}>
     <div ref={node} className="sim-leaflet" role="application" aria-label={`Interactive map of simulated storm T-01 at ${Math.round(state.dbz)} dBZ`} />
     {selected && <div className="sim-map-detail" role="dialog" aria-label="Storm cell T-01 details">
       <div className="sim-map-detail-head"><strong>T-01 · {state.stage}</strong><Button variant="ghost" size="icon" title="Close storm details" onClick={() => setSelected(false)}><X size={16} /></Button></div>
