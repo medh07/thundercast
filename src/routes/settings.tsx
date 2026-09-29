@@ -1,0 +1,3 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { Settings } from '@/pages/Settings';
+export const Route = createFileRoute('/settings')({ head: () => ({ meta: [{ title: 'Settings | ThunderCast AI' }, { name: 'description', content: 'Configure ThunderCast map layers, forecast duration, alert thresholds and display preferences.' }, { property: 'og:title', content: 'Settings | ThunderCast AI' }, { property: 'og:description', content: 'Customize your ThunderCast AI operations workspace.' }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' }] }), component: Settings });
