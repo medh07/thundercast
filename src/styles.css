@@ -104,7 +104,7 @@
 .sim-forecast-pin { background: var(--card); color: var(--cyan); border: 1px solid var(--cyan); border-radius: 12px; padding: 1px 8px; font-size: 10px; font-weight: 700; font-family: var(--font-display); }
 .sim-lightning-pin { color: var(--yellow); font-size: 15px; font-weight: 800; text-align: center; text-shadow: 0 0 6px var(--yellow); }
 .sim-cell-pin { background: var(--primary); color: var(--primary-foreground); border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 800; letter-spacing: .05em; }
-.sim-map-detail { position: absolute; bottom: 14px; left: 14px; z-index: 3; width: min(320px, calc(100% - 28px)); background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+.sim-map-detail { position: absolute; bottom: 14px; left: 14px; z-index: 1001; width: min(320px, calc(100% - 28px)); background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
 .sim-map-detail-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
 .sim-map-detail dl { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; margin: 0; }
 .sim-map-detail dt { color: var(--muted-foreground); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
