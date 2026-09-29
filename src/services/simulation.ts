@@ -28,7 +28,11 @@ export function nowcastAt(time: number, lead: number) {
 
 // Smooth, evolving storm outline (reflectivity contour) from low-order harmonics.
 export function stormPath(s: StormState, scale: number, seed = 0) {
-  const pts: string[] = [];
+  return `M${stormOutline(s, scale, seed).map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join('L')}Z`;
+}
+
+export function stormOutline(s: StormState, scale: number, seed = 0): [number, number][] {
+  const pts: [number, number][] = [];
   const rot = (s.heading - 90) * Math.PI / 180;
   const stretch = 1 + Math.min(0.55, s.speed / 90);
   for (let i = 0; i < 48; i++) {
@@ -38,9 +42,9 @@ export function stormPath(s: StormState, scale: number, seed = 0) {
     const ly = Math.sin(th) * s.r * scale * wobble * (1 / Math.sqrt(stretch));
     const x = s.x + lx * Math.cos(rot) - ly * Math.sin(rot) + Math.sin(th * 2 + seed) * s.r * scale * 0.08;
     const y = s.y + lx * Math.sin(rot) + ly * Math.cos(rot);
-    pts.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+    pts.push([x, y]);
   }
-  return `M${pts.join('L')}Z`;
+  return pts;
 }
 
 const hash = (n: number) => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
