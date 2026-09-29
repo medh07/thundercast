@@ -36,7 +36,7 @@ export function WeatherMap({ full = false }: { full?: boolean }) {
         {({ zoomIn, zoomOut, resetTransform }) => <>
           <TransformComponent wrapperClass="map-transform-wrap" contentClass="map-transform-content">
             <div className="map-canvas">
-              <img src={image} alt="Illustrative Delhi NCR weather radar map" className="map-image" width={1536} height={1024} />
+              <img src={image} alt="Illustrative Delhi NCR weather radar map" className="map-image" width={1536} height={1024} style={{ opacity: settings.layers.radar || settings.layers.satellite || settings.layers.modelForecast || settings.layers.rainfall ? 1 : 0.18 }} />
               {settings.layers.coverage && <svg className="map-svg" viewBox="0 0 1000 760" preserveAspectRatio="none" aria-hidden="true"><circle cx="365" cy="480" r="335" className="coverage-circle" /><circle cx="365" cy="480" r="226" className="coverage-circle" /><path d="M365 480 L118 247 M365 480 L680 210 M365 480 L660 695" className="coverage-line" /></svg>}
               {settings.layers.predictedTrack && <svg className="map-svg" viewBox="0 0 1000 760" preserveAspectRatio="none" aria-hidden="true"><path d="M430 458 Q505 330 770 211 Q823 185 810 124 Q783 75 735 124 Q540 252 408 420 Z" className="track-cone" /><path d="M430 458 Q560 290 760 167" className="track-dash" /><circle cx="575" cy="320" r="6" className="track-dot" /><circle cx="760" cy="167" r="7" className="track-dot" /></svg>}
               {settings.layers.wind && <div className="wind-arrows" aria-hidden="true">↗　↗　↗<br />　↗　↗　↗<br />↗　↗　↗</div>}

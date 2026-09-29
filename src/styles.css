@@ -70,3 +70,5 @@
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
 
 .compact-display .overview-page,.compact-display .page { padding: 10px; }.compact-display .overview-top,.compact-display .source-grid,.compact-display .insights-grid { gap: 7px; }.compact-display .panel:not(.weather-map) { padding-top: 8px; padding-bottom: 8px; }
+
+.nowcast-grid:has(.nowcast-tile:nth-child(3):last-child) { grid-template-columns: repeat(3,minmax(0,1fr)); }
