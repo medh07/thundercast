@@ -25,7 +25,7 @@ export function WeatherMap({ full = false }: { full?: boolean }) {
     const places: Record<string, { x: number; y: number; label: string }> = { delhi: { x: 48, y: 59, label: 'New Delhi' }, 'new delhi': { x: 48, y: 59, label: 'New Delhi' }, gurugram: { x: 40, y: 68, label: 'Gurugram' }, noida: { x: 58, y: 65, label: 'Noida' }, jaipur: { x: 21, y: 72, label: 'Jaipur' }, lucknow: { x: 89, y: 64, label: 'Lucknow' }, agra: { x: 65, y: 80, label: 'Agra' }, faridabad: { x: 52, y: 72, label: 'Faridabad' } };
     const found = places[location] ?? storms.find(storm => storm.name.toLowerCase().includes(location) && location.length > 1);
     if (!found) { setSearchError('Location not found in this regional preview'); return; }
-    setCenter(found);
+    setCenter({ x: found.x, y: found.y, label: 'label' in found ? found.label : found.name });
     setSearchError('');
     setSearchOpen(false);
   };
