@@ -10,15 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AiEngineRouteImport } from './routes/ai-engine'
 import { Route as AlertsRouteImport } from './routes/alerts'
 import { Route as DataSourcesRouteImport } from './routes/data-sources'
 import { Route as ForecastRouteImport } from './routes/forecast'
 import { Route as LiveMapRouteImport } from './routes/live-map'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as StormSimulationRouteImport } from './routes/storm-simulation'
+import { Route as ValidationRouteImport } from './routes/validation'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiEngineRoute = AiEngineRouteImport.update({
+  id: '/ai-engine',
+  path: '/ai-engine',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AlertsRoute = AlertsRouteImport.update({
@@ -46,56 +54,97 @@ const SettingsRoute = SettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StormSimulationRoute = StormSimulationRouteImport.update({
+  id: '/storm-simulation',
+  path: '/storm-simulation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ValidationRoute = ValidationRouteImport.update({
+  id: '/validation',
+  path: '/validation',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-engine': typeof AiEngineRoute
   '/alerts': typeof AlertsRoute
   '/data-sources': typeof DataSourcesRoute
   '/forecast': typeof ForecastRoute
   '/live-map': typeof LiveMapRoute
   '/settings': typeof SettingsRoute
+  '/storm-simulation': typeof StormSimulationRoute
+  '/validation': typeof ValidationRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-engine': typeof AiEngineRoute
   '/alerts': typeof AlertsRoute
   '/data-sources': typeof DataSourcesRoute
   '/forecast': typeof ForecastRoute
   '/live-map': typeof LiveMapRoute
   '/settings': typeof SettingsRoute
+  '/storm-simulation': typeof StormSimulationRoute
+  '/validation': typeof ValidationRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-engine': typeof AiEngineRoute
   '/alerts': typeof AlertsRoute
   '/data-sources': typeof DataSourcesRoute
   '/forecast': typeof ForecastRoute
   '/live-map': typeof LiveMapRoute
   '/settings': typeof SettingsRoute
+  '/storm-simulation': typeof StormSimulationRoute
+  '/validation': typeof ValidationRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/alerts' | '/data-sources' | '/forecast' | '/live-map' | '/settings'
-  fileRoutesByTo: FileRoutesByTo
-  to:
-    '/' | '/alerts' | '/data-sources' | '/forecast' | '/live-map' | '/settings'
-  id:
-    | '__root__'
     | '/'
+    | '/ai-engine'
     | '/alerts'
     | '/data-sources'
     | '/forecast'
     | '/live-map'
     | '/settings'
+    | '/storm-simulation'
+    | '/validation'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/ai-engine'
+    | '/alerts'
+    | '/data-sources'
+    | '/forecast'
+    | '/live-map'
+    | '/settings'
+    | '/storm-simulation'
+    | '/validation'
+  id:
+    | '__root__'
+    | '/'
+    | '/ai-engine'
+    | '/alerts'
+    | '/data-sources'
+    | '/forecast'
+    | '/live-map'
+    | '/settings'
+    | '/storm-simulation'
+    | '/validation'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiEngineRoute: typeof AiEngineRoute
   AlertsRoute: typeof AlertsRoute
   DataSourcesRoute: typeof DataSourcesRoute
   ForecastRoute: typeof ForecastRoute
   LiveMapRoute: typeof LiveMapRoute
   SettingsRoute: typeof SettingsRoute
+  StormSimulationRoute: typeof StormSimulationRoute
+  ValidationRoute: typeof ValidationRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -105,6 +154,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-engine': {
+      id: '/ai-engine'
+      path: '/ai-engine'
+      fullPath: '/ai-engine'
+      preLoaderRoute: typeof AiEngineRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/alerts': {
@@ -142,16 +198,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/storm-simulation': {
+      id: '/storm-simulation'
+      path: '/storm-simulation'
+      fullPath: '/storm-simulation'
+      preLoaderRoute: typeof StormSimulationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/validation': {
+      id: '/validation'
+      path: '/validation'
+      fullPath: '/validation'
+      preLoaderRoute: typeof ValidationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiEngineRoute: AiEngineRoute,
   AlertsRoute: AlertsRoute,
   DataSourcesRoute: DataSourcesRoute,
   ForecastRoute: ForecastRoute,
   LiveMapRoute: LiveMapRoute,
   SettingsRoute: SettingsRoute,
+  StormSimulationRoute: StormSimulationRoute,
+  ValidationRoute: ValidationRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
