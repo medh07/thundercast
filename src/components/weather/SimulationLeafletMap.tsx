@@ -37,8 +37,8 @@ export function SimulationLeafletMap({ time, layers, state }: Props) {
       leaflet.current = L;
       instance = L.map(node.current, { center: [28.6139, 77.209], zoom: 9, minZoom: 7, maxZoom: 15, zoomControl: true, scrollWheelZoom: true, preferCanvas: true });
       map.current = instance;
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        subdomains: 'abcd', maxZoom: 19, attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19, attribution: '&copy; Esri, HERE, Garmin & partners',
       }).addTo(instance);
       satelliteTiles.current = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         maxZoom: 19, attribution: 'Imagery &copy; Esri and partners', opacity: .75,
