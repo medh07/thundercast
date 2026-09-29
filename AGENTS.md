@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Weather UI is organized into pages, reusable weather components, typed mock data, and replaceable service adapters so live feeds can be added without rebuilding the interface.
+- Forecast, map layers, playback, alert status, and browser-saved preferences share one client-side weather provider so controls stay synchronized across routes.

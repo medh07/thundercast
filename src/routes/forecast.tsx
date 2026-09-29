@@ -1,0 +1,3 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { Forecast } from '@/pages/Forecast';
+export const Route = createFileRoute('/forecast')({ head: () => ({ meta: [{ title: 'Forecast | ThunderCast AI' }, { name: 'description', content: 'Explore 0–120 minute AI thunderstorm, lightning and rainfall nowcasts for Delhi NCR.' }, { property: 'og:title', content: 'Forecast | ThunderCast AI' }, { property: 'og:description', content: 'Interactive AI weather nowcasts for Delhi NCR.' }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' }] }), component: Forecast });

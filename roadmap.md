@@ -1,0 +1,4 @@
+- [x] Recreate the attached ThunderCast overview and visual system.
+- [x] Build interactive map, nowcast, storm detail, and all six working pages.
+- [x] Wire mock weather services, alert actions, and locally saved settings.
+- [x] Verify desktop/mobile rendering and interactions.

@@ -1,0 +1,3 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { DataSources } from '@/pages/DataSources';
+export const Route = createFileRoute('/data-sources')({ head: () => ({ meta: [{ title: 'Data Sources | ThunderCast AI' }, { name: 'description', content: 'Inspect radar, satellite, lightning, observation and model data source status.' }, { property: 'og:title', content: 'Data Sources | ThunderCast AI' }, { property: 'og:description', content: 'Source status for the ThunderCast nowcasting platform.' }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' }] }), component: DataSources });

@@ -1,0 +1,3 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { LiveMap } from '@/pages/LiveMap';
+export const Route = createFileRoute('/live-map')({ head: () => ({ meta: [{ title: 'Live Map | ThunderCast AI' }, { name: 'description', content: 'Explore interactive radar, satellite, lightning and storm tracks across Delhi NCR.' }, { property: 'og:title', content: 'Live Map | ThunderCast AI' }, { property: 'og:description', content: 'Interactive Delhi NCR radar, satellite and lightning map.' }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' }] }), component: LiveMap });
