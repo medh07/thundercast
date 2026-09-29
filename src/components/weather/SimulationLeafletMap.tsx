@@ -121,7 +121,7 @@ export function SimulationLeafletMap({ time, layers, state }: Props) {
     });
 
     if (layers.lightning) strikesAt(frame).forEach(strike => {
-      add(L.marker(toGeo(strike.x, strike.y), { icon: L.divIcon({ className: 'sim-lightning-pin', html: 'ϟ', iconSize: [18, 24], iconAnchor: [9, 12] }), opacity: Math.max(.2, 1 - strike.age / 6) }).bindTooltip('Simulated lightning strike'));
+      add(L.marker(toGeo(strike.x, strike.y), { icon: L.divIcon({ className: 'sim-lightning-pin', html: 'ϟ', iconSize: [18, 24], iconAnchor: [9, 12] }), opacity: Math.max(.2, 1 - strike.age / 6), interactive: false }).bindTooltip('Simulated lightning strike'));
     });
 
     if (frame < 359 && s.dbz > 20) {
