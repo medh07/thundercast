@@ -112,7 +112,9 @@
 .sim-map-detail small { color: var(--muted-foreground); display: block; margin-top: 8px; }
 .weather-leaflet,.weather-leaflet .sim-leaflet { width: 100%; height: 100%; }
 .weather-leaflet .sim-map-detail { bottom: 12px; }
-.leaflet-map-tools { top: 84px; }
+.leaflet-map-tools { top: 84px; z-index: 1101; }
+.weather-map .map-popover { z-index: 1102; }
+.weather-map .track-label { z-index: 1100; }
 .weather-map .leaflet-control-zoom { margin-top: 12px; margin-left: 12px; }
 .weather-map .leaflet-control-attribution { max-width: calc(100% - 8px); white-space: normal; }
 .dbz-20 { fill: oklch(.62 .15 151); background: oklch(.62 .15 151); }
