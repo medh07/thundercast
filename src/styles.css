@@ -93,13 +93,13 @@
 /* Leaflet simulation map */
 .sim-leaflet-wrap { position: relative; }
 .sim-leaflet { width: 100%; height: clamp(380px, 52vw, 620px); background: var(--background); }
-.leaflet-container { background: var(--background); font: inherit; }
-.leaflet-control-attribution { background: oklch(.15 .02 250 / 80%); color: var(--muted-foreground); font-size: 10px; }
-.leaflet-control-attribution a { color: var(--muted-foreground); }
-.leaflet-bar a { background: var(--card); color: var(--foreground); border-color: var(--border); }
-.leaflet-bar a:hover { background: var(--accent); }
-.leaflet-tooltip { background: var(--card); color: var(--foreground); border: 1px solid var(--border); box-shadow: none; font-size: 11px; border-radius: 4px; }
-.leaflet-tooltip:before { display: none; }
+.sim-leaflet.leaflet-container { background: var(--background); font: inherit; }
+.sim-leaflet .leaflet-control-attribution { background: oklch(.15 .02 250 / 80%); color: var(--muted-foreground); font-size: 10px; }
+.sim-leaflet .leaflet-control-attribution a { color: var(--muted-foreground); }
+.sim-leaflet .leaflet-bar a { background: var(--card); color: var(--foreground); border-color: var(--border); }
+.sim-leaflet .leaflet-bar a:hover { background: var(--accent); }
+.sim-leaflet .leaflet-tooltip { background: var(--card); color: var(--foreground); border: 1px solid var(--border); box-shadow: none; font-size: 11px; border-radius: 4px; }
+.sim-leaflet .leaflet-tooltip:before { display: none; }
 .sim-place-label { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; font-size: 11px; font-weight: 600; color: var(--foreground); white-space: nowrap; }
 .sim-forecast-pin { background: var(--card); color: var(--cyan); border: 1px solid var(--cyan); border-radius: 12px; padding: 1px 8px; font-size: 10px; font-weight: 700; font-family: var(--font-display); }
 .sim-lightning-pin { color: var(--yellow); font-size: 15px; font-weight: 800; text-align: center; text-shadow: 0 0 6px var(--yellow); }
