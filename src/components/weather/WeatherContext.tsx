@@ -11,6 +11,7 @@ export function WeatherProvider({ children }: { children: ReactNode }) {
   const [alerts, setAlerts] = useState<WeatherAlert[]>(initialAlerts);
   const [time, setTime] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     try {
       const saved = localStorage.getItem(SETTINGS_KEY);
@@ -18,9 +19,10 @@ export function WeatherProvider({ children }: { children: ReactNode }) {
       const savedAlerts = localStorage.getItem(ALERTS_KEY);
       if (savedAlerts) setAlerts(JSON.parse(savedAlerts));
     } catch { /* Ignore invalid saved preferences. */ }
+    setLoaded(true);
   }, []);
-  useEffect(() => { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); }, [settings]);
-  useEffect(() => { localStorage.setItem(ALERTS_KEY, JSON.stringify(alerts)); }, [alerts]);
+  useEffect(() => { if (loaded) localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); }, [settings, loaded]);
+  useEffect(() => { if (loaded) localStorage.setItem(ALERTS_KEY, JSON.stringify(alerts)); }, [alerts, loaded]);
   useEffect(() => {
     if (!playing) return;
     const timer = window.setInterval(() => setTime(current => current >= settings.duration ? 0 : Math.min(settings.duration, current + 15)), 1200 / settings.animationSpeed);
