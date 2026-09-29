@@ -1,13 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Activity, AlertTriangle, Brain, CloudRain, Droplets, FastForward, Gauge, Navigation, Pause, Play, RotateCcw, Thermometer, Timer, Wind, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import radarImage from '@/assets/delhi-radar.jpg';
-import { SEVERE_JUMP_MIN, SIM_REAL_SECONDS, SIM_TOTAL_MIN, mapPlaces } from '@/data/simulation';
-import { activeWarning, areaThreats, clockFor, explain, nowcastAt, stormAt, stormPath, strikesAt } from '@/services/simulation';
+import { SEVERE_JUMP_MIN, SIM_REAL_SECONDS, SIM_TOTAL_MIN } from '@/data/simulation';
+import { activeWarning, areaThreats, clockFor, explain, nowcastAt, stormAt } from '@/services/simulation';
+import { SimulationLeafletMap, simulationLayerNames, type SimLayer } from '@/components/weather/SimulationLeafletMap';
 
-type SimLayer = 'radar' | 'satellite' | 'lightning' | 'wrf' | 'ai';
-const layerNames: Record<SimLayer, string> = { radar: 'Radar', satellite: 'Satellite', lightning: 'Lightning', wrf: 'WRF/NWP', ai: 'AI Forecast' };
-const bands = [{ scale: 1, min: 18, cls: 'dbz-20' }, { scale: 0.74, min: 32, cls: 'dbz-35' }, { scale: 0.5, min: 45, cls: 'dbz-45' }, { scale: 0.3, min: 54, cls: 'dbz-55' }, { scale: 0.16, min: 60, cls: 'dbz-60' }];
 const leads = [30, 60, 90, 120];
 const riskOf = (v: number, hi: number, mid: number) => v >= hi ? 'High' : v >= mid ? 'Moderate' : 'Low';
 
@@ -32,7 +29,6 @@ export function StormSimulation() {
   }, [playing, speed]);
 
   const s = stormAt(time);
-  const strikes = useMemo(() => strikesAt(time), [Math.floor(time * 4)]); // eslint-disable-line react-hooks/exhaustive-deps
   const why = explain(time);
   const warning = activeWarning(time);
   const predictions = leads.map(l => nowcastAt(time, l)).filter(p => p.valid && p.dbz > 18);
@@ -47,17 +43,8 @@ export function StormSimulation() {
       <div className="sim-main">
         <div className="panel sim-map">
           <div className="sim-map-head"><strong><Activity size={15} /> T-01 · {s.stage}</strong><span className={`sim-sev sim-sev-${s.severity.toLowerCase()}`}>{s.severity}</span><span className="sim-clock">{clockFor(time)} IST <small>T+{Math.floor(time)} min</small></span></div>
-          <div className="sim-layers">{(Object.keys(layerNames) as SimLayer[]).map(k => <Button key={k} variant={layers[k] ? 'filterActive' : 'filter'} size="sm" onClick={() => toggle(k)}>{layerNames[k]}</Button>)}</div>
-          <svg viewBox="0 0 1000 700" className="sim-svg" role="img" aria-label={`Simulated radar showing storm T-01 at ${Math.round(s.dbz)} dBZ`}>
-            <defs>
-              <filter id="soft"><feGaussianBlur stdDeviation="6" /></filter>
-              <filter id="softer"><feGaussianBlur stdDeviation="18" /></filter>
-              <radialGradient id="wrfGrad"><stop offset="0%" className="wrf-stop-a" /><stop offset="100%" className="wrf-stop-b" /></radialGradient>
-            </defs>
-            <image href={radarImage} x="0" y="0" width="1000" height="700" preserveAspectRatio="xMidYMid slice" className="sim-base" />
-            <g className="sim-grid">{Array.from({ length: 9 }, (_, i) => <line key={`v${i}`} x1={i * 125} y1="0" x2={i * 125} y2="700" />)}{Array.from({ length: 6 }, (_, i) => <line key={`h${i}`} x1="0" y1={i * 140} x2="1000" y2={i * 140} />)}</g>
-            <circle cx="470" cy="368" r="300" className="sim-range" /><circle cx="470" cy="368" r="160" className="sim-range" />
-            <line x1="470" y1="368" x2={470 + Math.cos(time * 0.9) * 300} y2={368 + Math.sin(time * 0.9) * 300} className="sim-sweep" />
+          <div className="sim-layers">{(Object.keys(simulationLayerNames) as SimLayer[]).map(k => <Button key={k} variant={layers[k] ? 'filterActive' : 'filter'} size="sm" onClick={() => toggle(k)}>{simulationLayerNames[k]}</Button>)}</div>
+          <SimulationLeafletMap time={time} layers={layers} state={s} />
 
             {layers.wrf && <g className="wrf-layer"><ellipse cx={s.x + 90} cy={s.y - 60} rx={80 + s.cape / 18} ry={50 + s.cape / 30} fill="url(#wrfGrad)" style={{ opacity: Math.min(0.85, s.cape / 3000) }} /><text x={s.x + 110} y={s.y - 60 - s.cape / 30 - 12} className="sim-tag">WRF CAPE {Math.round(s.cape)} J/kg</text></g>}
             {layers.satellite && <g filter="url(#softer)" style={{ opacity: Math.min(0.8, -s.ctt / 80) }}><path d={stormPath({ ...s, r: s.r * 1.25 }, 1.15, 4)} className="sat-cloud" /><path d={stormPath({ ...s, r: s.r * 1.25 }, 0.6, 5)} className={s.ctt < -55 ? 'sat-cold' : 'sat-mid'} /></g>}
