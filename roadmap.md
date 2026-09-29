@@ -5,3 +5,4 @@
 - [x] Storm Simulation (T-01 lifecycle, AI nowcast ghosts, early warnings, controls, layers, explanation).
 - [x] AI Engine and Validation pages; replace unsupported accuracy claims.
 - [x] Replace only the Storm Simulation schematic map with an interactive Leaflet map and synthetic geospatial overlays; verify playback and layer controls.
+- [ ] Reuse the interactive Leaflet map on Overview and Live Map; verify shared layers, search, playback, and responsive layouts.
