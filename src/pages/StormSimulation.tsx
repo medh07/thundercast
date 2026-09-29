@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Activity, AlertTriangle, Brain, CloudRain, Droplets, FastForward, Gauge, Navigation, Pause, Play, RotateCcw, Thermometer, Timer, Wind, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SEVERE_JUMP_MIN, SIM_REAL_SECONDS, SIM_TOTAL_MIN } from '@/data/simulation';
-import { activeWarning, areaThreats, clockFor, explain, nowcastAt, stormAt } from '@/services/simulation';
+import { activeWarning, clockFor, explain, nowcastAt, stormAt } from '@/services/simulation';
 import { SimulationLeafletMap, simulationLayerNames, type SimLayer } from '@/components/weather/SimulationLeafletMap';
 
 const leads = [30, 60, 90, 120];
