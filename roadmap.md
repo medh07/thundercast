@@ -4,4 +4,4 @@
 - [x] Verify desktop/mobile rendering and interactions.
 - [x] Storm Simulation (T-01 lifecycle, AI nowcast ghosts, early warnings, controls, layers, explanation).
 - [x] AI Engine and Validation pages; replace unsupported accuracy claims.
-- [ ] Replace only the Storm Simulation schematic map with an interactive Leaflet map and synthetic geospatial overlays; verify playback and layer controls.
+- [x] Replace only the Storm Simulation schematic map with an interactive Leaflet map and synthetic geospatial overlays; verify playback and layer controls.
