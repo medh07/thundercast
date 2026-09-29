@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type * as Leaflet from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { areaThreats, activeWarning, nowcastAt, stormAt, strikesAt } from '@/services/simulation';
