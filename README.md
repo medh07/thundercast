@@ -12,6 +12,21 @@
 **Problem Statement:**  
 *AIML based Nowcasting of thunderstorm and lightning using atmospheric observation including multiple radars, satellite, lightning and model data.*
 
+### Team Members
+
+**Team Leader:** Medhansh Garg
+
+**Team Member:** Krish Bharti
+
+**Team Member:** Prateek Sangwan
+
+**Team Member:** Vivaan Tamrakar
+
+**Team Member:** Mayank Aggarwal
+
+**Team Member:** Kumkum Thakur
+
+
 ---
 
 ## 🌩️ Overview
