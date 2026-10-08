@@ -754,3 +754,5 @@ Thunderstorms and lightning evolve rapidly, while the relevant information is di
 ### **Observe. Understand. Predict. Warn. Protect.**
 
 **Smart India Hackathon 2026 — SIH26072**
+## Prototype Video Link - https://www.youtube.com/watch?v=oVpKFteOI-c
+
